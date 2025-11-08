@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="description" content="Consumer Dispute Assistance — client portal for credit report audits and dispute letter generation.">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="apple-touch-icon" href="/logo.png"><title>About Dwight Williams — CDS</title>
+ <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root { --brand-blue:#2563eb; --brand-teal:#14b8a6; --brand-silver:#e5e7eb; }
+    html, body { font-family:'Merriweather', serif; }
+    .cds-logo { font-weight:900; letter-spacing:1px;
+      background: linear-gradient(90deg, var(--brand-blue), var(--brand-teal), var(--brand-silver));
+      -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .cds-sub { font-family:'Alex Brush',cursive; margin-top:-6px; }
+    .hero-anim { background: linear-gradient(120deg, var(--brand-blue), var(--brand-teal), var(--brand-blue));
+      background-size:200% 200%; animation: gradientShift 12s ease-in-out infinite; position:relative; overflow:hidden; }
+    @keyframes gradientShift {
+      0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; }
+    }
+    .overlay:before { content:""; position:absolute; inset:0; opacity:.18; pointer-events:none; mix-blend-mode:overlay; }
+    .overlay-office:before {
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size:28px 28px, 28px 28px;
+    }
+    .input { width:100%; padding:.75rem 1rem; border:1px solid #d1d5db; border-radius:.75rem; box-shadow:0 1px 1px rgba(0,0,0,.03); }
+    .input:focus { outline:none; border-color: var(--brand-blue); box-shadow:0 0 0 3px rgba(37,99,235,.25); }
+    .container { max-width: 1100px; }
+  </style>
+
+  <!-- NAVBAR -->
+  <nav class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <a class="select-none flex items-center gap-3" href="index.html">
+        <div class="flex flex-col leading-none">
+          <span class="cds-logo text-2xl">CDS</span>
+          <span class="cds-sub text-xs text-gray-600">Consumer Dispute Assistance</span>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-3">
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100 font-bold text-indigo-600" href="index.html">Home</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="plans.html">Plans</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="consultation.html">Consultation</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="ebooks.html">eBooks</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="terms.html" target="_blank">Terms</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO BANNER -->
+  <header class="relative w-full h-64 md:h-80 overflow-hidden hero-anim">
+    <img src="images/about-banner.jpg" alt="About Banner" class="absolute inset-0 w-full h-full object-cover opacity-70">
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="relative z-10 flex flex-col justify-center items-center h-full text-center text-white">
+      <h1 class="text-4xl md:text-5xl font-black mb-2">About Dwight Williams</h1>
+      <p class="text-lg md:text-xl text-white/90">Founder of Consumer Dispute Assistance (CDS)</p>
+    </div>
+  </header>
+
+  <!-- PROFILE & BIO -->
+  <main class="container mx-auto px-4 py-16" style="max-width:900px;">
+    <div class="flex flex-col items-center text-center">
+      <img src="images/dwight.jpg" alt="Dwight Williams" class="w-40 h-40 rounded-full object-cover border-4 border-white shadow-lg -mt-24 mb-6 bg-gray-200">
+      <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-200 w-full">
+        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+          Dwight Williams — founder, creator, and motivator behind everything you see right here.
+          My mission? Simple: empower people to take control of their life, their money, and their mindset —
+          and never be at the mercy of the system again.
+        </p>
+        <p class="text-lg text-gray-700 leading-relaxed mb-6">
+          I’ve been through the struggles, learned the hard way, and turned it into a blueprint for others to win.
+        </p>
+        <a href="consultation.html" class="btn primary inline-flex mt-6">Book Your Free Consultation</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>© <span id="y"></span> Consumer Dispute Assistance</p>
+  </footer>
+
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html> =.

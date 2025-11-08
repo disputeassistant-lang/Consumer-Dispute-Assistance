@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta name="theme-color" content="#2563eb">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/logo.png">
+  <link rel="apple-touch-icon" href="/logo.png"><title>CDS — Consultation</title>
+ <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" crossorigin="anonymous"></script>
+  <style>
+    :root { --brand-blue:#2563eb; --brand-teal:#14b8a6; --brand-silver:#e5e7eb; }
+    html, body { font-family:'Merriweather', serif; }
+    .cds-logo { font-weight:900; letter-spacing:1px;
+      background: linear-gradient(90deg, var(--brand-blue), var(--brand-teal), var(--brand-silver));
+      -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .cds-sub { font-family:'Alex Brush',cursive; margin-top:-6px; }
+    .hero-anim { background: linear-gradient(120deg, var(--brand-blue), var(--brand-teal), var(--brand-blue));
+      background-size:200% 200%; animation: gradientShift 12s ease-in-out infinite; position:relative; overflow:hidden; }
+    @keyframes gradientShift {
+      0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; }
+    }
+    .overlay:before { content:""; position:absolute; inset:0; opacity:.18; pointer-events:none; mix-blend-mode:overlay; }
+    .overlay-office:before {
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size:28px 28px, 28px 28px;
+    }
+    .input { width:100%; padding:.75rem 1rem; border:1px solid #d1d5db; border-radius:.75rem; box-shadow:0 1px 1px rgba(0,0,0,.03); }
+    .input:focus { outline:none; border-color: var(--brand-blue); box-shadow:0 0 0 3px rgba(37,99,235,.25); }
+    .container { max-width: 1100px; }
+  </style><body class="bg-gray-50 text-gray-800" style="font-family:'Merriweather', serif;">
+  <nav class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <a class="select-none flex items-center gap-3" href="index.html">
+        <div class="flex flex-col leading-none">
+          <span class="cds-logo text-2xl">CDS</span>
+          <span class="cds-sub text-xs text-gray-600">Consumer Dispute Assistance</span>
+        </div>
+      </a>
+      <div class="hidden md:flex items-center gap-3">
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="index.html">Home</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="upload.html">Upload Responses</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="ebooks.html">eBooks</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="terms.html" target="_blank">Terms</a>
+      </div>
+      <button class="md:hidden px-3 py-2 rounded-lg border" onclick="document.getElementById('mobileNav').classList.toggle('hidden')">Menu</button>
+    </div>
+    <div id="mobileNav" class="md:hidden hidden border-t border-gray-200">
+      <div class="px-4 py-3 flex flex-col gap-2">
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="index.html">Home</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="upload.html">Upload Responses</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="ebooks.html">eBooks</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-gray-100" href="terms.html" target="_blank">Terms</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero-anim text-white py-12 text-center overlay overlay-office">
+    <div class="container mx-auto px-4">
+      <h1 id="planTitle" class="text-3xl md:text-4xl font-black tracking-tight mb-2">Consultation</h1>
+      <p id="planSubtitle" class="max-w-2xl mx-auto opacity-95"></p>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-8" style="max-width:1100px;">
+    <!-- Plan explainer -->
+    <section class="grid gap-6 md:grid-cols-2 mb-8">
+      <div class="card p-6">
+        <h2 class="text-xl font-bold mb-2">What's Included</h2>
+        <ul id="planFeatures" class="list-disc ml-5 text-slate-700"></ul>
+      </div>
+      <div class="card p-6">
+        <h2 class="text-xl font-bold mb-2">How It Works</h2>
+        <ol class="list-decimal ml-5 text-slate-700 space-y-1">
+          <li>Upload your latest credit report (PDF, ZIP, or images).</li>
+          <li>Book your free consultation at a time that works for you.</li>
+          <li>We review your report live and map your dispute strategy.</li>
+          <li>After booking, finalize your plan with checkout to begin.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Upload + Calendly -->
+    <section class="grid gap-6 md:grid-cols-2">
+      <div class="card p-6">
+        <h3 class="text-lg font-bold mb-3">Secure Report Upload</h3>
+        <!-- Replace Jotform URL if needed -->
+        <iframe src="https://form.jotform.com/252575698175069" style="width:100%;height:650px;border:0;border-radius:12px;"></iframe>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-bold mb-3">Book Your Free Consultation</h3>
+        <!-- Calendly Embed -->
+        <div class="calendly-inline-widget" data-url="https://calendly.com/disputeassistant" style="min-width:320px;height:650px;"></div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+        <div class="mt-4 p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-sm">
+          After you select your date/time above, click the button below to proceed to checkout and **finalize your plan**.
+        </div>
+        <div class="mt-3 flex flex-col sm:flex-row gap-3">
+          <a id="proceedBtn" class="btn primary" href="payment.html">Proceed to Checkout</a>
+          <a class="btn secondary" href="index.html">Back to Home</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>© <span id="y"></span> Consumer Dispute Assistance</p></footer>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Plan copy based on ?plan=
+    const params = new URLSearchParams(location.search);
+    const plan = (params.get('plan') || '').toLowerCase();
+    const title = document.getElementById('planTitle');
+    const sub = document.getElementById('planSubtitle');
+    const list = document.getElementById('planFeatures');
+    const proceed = document.getElementById('proceedBtn');
+
+    function li(txt){ const li=document.createElement('li'); li.textContent = txt; return li; }
+
+    if (plan === 'full') {
+      title.textContent = 'Full-Service Consultation & Onboarding';
+      sub.textContent = 'Free consultation included • Full-cycle dispute management • 24/7 customer support';
+      list.appendChild(li('Full 90-day management: audits, letters, mailing, tracking, and escalation.'));
+      list.appendChild(li('Live review of your report during the call.'));
+      list.appendChild(li('Unlimited rounds during the service period.'));
+      list.appendChild(li('24/7 customer support.'));
+      proceed.href = 'payment.html?plan=full';
+    } else {
+      title.textContent = 'DIY Plan Consultation';
+      sub.textContent = 'Free consultation included • 3 rounds of guidance and support';
+      list.appendChild(li('3 full rounds: strategy, drafting guidance, and follow-up per round.'));
+      list.appendChild(li('Live review of your report during the call.'));
+      list.appendChild(li('You handle mailing; we advise and prepare.'));
+      proceed.href = 'payment.html?plan=diy';
+    }
+  </script>
+</body>
+</html>

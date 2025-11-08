@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CDS — Client (Internal)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50 text-gray-800" style="font-family:'Merriweather', serif;">
+  <header class="hero-anim text-white py-12 text-center overlay overlay-office">
+    <h1 class="text-3xl md:text-4xl font-black tracking-tight">Internal Dashboard</h1>
+    <p class="opacity-95">This area is reserved for staff tools. Public letter generator has been removed.</p>
+  </header>
+  <main class="container" style="max-width:1000px;margin:0 auto;padding:24px">
+    <div class="card p-6">
+      <h2 class="text-xl font-bold mb-2">Coming Soon</h2>
+      <p class="text-slate-700">Add internal utilities here (client folders, note-taking, progress tracking). For now, direct clients to <a class="text-indigo-700 underline" href="consultation.html">Consultation</a>.</p>
+    </div>
+  </main>
+  <footer class="site-footer"><p>© <span id="y"></span> Consumer Dispute Assistance</p></footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>

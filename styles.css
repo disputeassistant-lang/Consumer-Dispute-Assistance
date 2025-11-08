@@ -1,0 +1,12 @@
+/* Shared styles without overriding your client.html Tailwind */
+body,html{font-family:'Merriweather',serif;margin:0}
+.container{max-width:1100px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border-radius:10px;font-weight:800;text-decoration:none;border:0;transition:.2s}
+.btn.primary{background:#2563eb;color:#fff}.btn.primary:hover{filter:brightness(.95)}
+.btn.secondary{background:#14b8a6;color:#0b1220}
+.hero-anim{background:linear-gradient(120deg,#2563eb,#14b8a6,#2563eb);background-size:200% 200%;animation:heroShift 12s ease-in-out infinite;position:relative;overflow:hidden}
+@keyframes heroShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.overlay:before{content:'';position:absolute;inset:0;opacity:.18;pointer-events:none;mix-blend-mode:overlay}
+.overlay-office:before{background-image:linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);background-size:28px 28px,28px 28px}
+.site-footer{background:#0f172a;color:#cbd5e1;text-align:center;padding:18px;margin-top:28px}
